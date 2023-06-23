@@ -12,6 +12,7 @@ public class Login extends WindowAdapter implements ActionListener {
 	private JButton bLogin, newMem, findId, findPwd;
 	private MemberDAO dao;
 	private Icon logo;
+	private String ID;
 
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
@@ -30,7 +31,7 @@ public class Login extends WindowAdapter implements ActionListener {
 		Login_f.getContentPane().setBackground(Color.white); // 필드 안만들고 색상 흰색으로 바꾸기
 
 		logo = new ImageIcon("C:\\Users\\Class01\\Desktop\\logo.png");
-		JLabel imglogo= new JLabel(logo);
+		JLabel imglogo = new JLabel(logo);
 		imglogo.setBounds(288, 97, 400, 130);
 
 		Label lid = new Label("아이디");
@@ -109,9 +110,12 @@ public class Login extends WindowAdapter implements ActionListener {
 			System.out.println("==>" + id + " : " + pwd);
 
 			if (Lo_Pwd.getText().equals(pwd)) {
-				Customer cuPage = new Customer();
-				cuPage.startFrame();
+				ID = strId;
+				
+				Customer cuPage = new Customer(ID);
+				
 				Login_f.setVisible(false);
+
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 비밀번호가 일치하지 않습니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
 			}
@@ -121,15 +125,15 @@ public class Login extends WindowAdapter implements ActionListener {
 			NewMember nM = new NewMember();
 			nM.startFrame();
 		}
-		
+
 		if (e.getActionCommand().equals("아이디 찾기")) {
 			FindId FI = new FindId();
 			FI.startFrame();
 		}
-		
-		if(e.getActionCommand().equals("비밀번호 찾기")) {
-			
+
+		if (e.getActionCommand().equals("비밀번호 찾기")) {
+			FindPwd FP = new FindPwd();
 		}
-		
+
 	}
 }
