@@ -85,7 +85,6 @@ public class FindId extends WindowAdapter implements ActionListener {
 			MemberVo FDd = (MemberVo) Idlist.get(i);
 			
 			if(strNa.equals(strNa) && strBi.equals(strBi) && strEm.equals(strEm)) {
-//				System.out.println("아이디는 [ "+(FDd.getCI())+" ] 입니다.");
 				JOptionPane.showMessageDialog(null, "아이디는 ["+(FDd.getCI())+"] 입니다.");
 			}
 		}
