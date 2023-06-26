@@ -3,6 +3,7 @@ package Main;
 import java.sql.*;
 import java.util.*;
 
+ //회원 정보 관리 멤버다오
 public class MemberDAO {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521/xe";
@@ -13,9 +14,38 @@ public class MemberDAO {
 	private Statement stmt;
 	private ResultSet rs;
 
+	// 회원가입
+	public void Newlist(String NewId, String NewPwd, String NewNm, String NewBt, String NewEm) {
+		ArrayList<MemberVo> Newlist = new ArrayList<MemberVo>();
+		System.out.println(NewId);
+		try {
+			Class.forName(driver);
+			System.out.println("jdbc driver loading success.");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			System.out.println("oracle connection success.\n");
+			Statement stmt = conn.createStatement();
+
+			String Nquery = "INSERT INTO MEMBER VALUES ('" + NewId + "','" + NewPwd + "','" + NewNm + "','" + NewBt
+					+ "', " + "'" + NewEm + "')";
+			System.out.println(Nquery);
+
+			boolean b = stmt.execute(Nquery);
+			if (!b) {
+				System.out.println("Insert success.\n");
+			} else {
+				System.out.println("Insert fail.\n");
+			}
+
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// 로그인
 	public ArrayList<MemberVo> list(String id) {
 		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
-
 		try {
 			connDB();
 
@@ -50,6 +80,7 @@ public class MemberDAO {
 		return list;
 	}
 
+	// 아이디 찾기
 	public ArrayList<MemberVo> Idlist(String name, String birthday, String Email) {
 		ArrayList<MemberVo> Idlist = new ArrayList<MemberVo>();
 		try {
@@ -88,9 +119,8 @@ public class MemberDAO {
 		return Idlist;
 	}
 
-	public void Newlist(String NewId, String NewPwd, String NewNm, String NewBt, String NewEm) {
-		ArrayList<MemberVo> Newlist = new ArrayList<MemberVo>();
-		System.out.println(NewId);
+	// 비밀번호 찾기-조회
+	public void Pwdlist(String FindId, String FindEm) {
 		try {
 			Class.forName(driver);
 			System.out.println("jdbc driver loading success.");
@@ -98,8 +128,124 @@ public class MemberDAO {
 			System.out.println("oracle connection success.\n");
 			Statement stmt = conn.createStatement();
 
-			String Nquery = "INSERT INTO MEMBER VALUES ('" + NewId + "','" + NewPwd + "','" + NewNm + "','" + NewBt
-					+ "', " + "'" + NewEm + "')";
+			String Fquery  = "SELECT CMS_ID FROM MEMBER WHERE CMS_ID = '" + FindId + "' AND EMAIL = '" + FindEm + "'";
+				System.out.println("SQL : " + Fquery);
+
+				boolean b = stmt.execute(Fquery);
+				if(!b) {
+					System.out.println("Find user");
+				}else {
+					System.out.println("Can not find user");
+				}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	//비밀번호 찾기-변경
+	public void NewPwd(String ID, String NPwd) {
+		try {
+			Class.forName(driver);
+			System.out.println("jdbc driver loading success.");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			System.out.println("oracle connection success.\n");
+			Statement stmt = conn.createStatement();
+
+			String Nquery  = "UPDATE MEMBER SET CMS_PWD = '" + NPwd + "' WHERE CMS_ID ='" + ID + "'";
+				System.out.println("SQL : " + Nquery);
+
+				boolean b = stmt.execute(Nquery);
+				if(!b) {
+					System.out.println("Change password");
+				}else {
+					System.out.println("Not");
+				}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+
+	// 비밀번호 변경 : 기존 비밀번호 찾기
+	public String RePwd(String ID) {
+		String Pwd = "";
+		try {
+			connDB();
+
+			String query = "SELECT CMS_PWD FROM MEMBER WHERE CMS_ID =TRIM('" + ID + "')";
+			System.out.println("SQL : " + query);
+
+			rs = stmt.executeQuery(query);
+			rs.last();
+			System.out.println("rs.getRow() : " + rs.getRow());
+
+			if (rs.getRow() == 0) {
+				System.out.println("0 row selected...");
+			} else {
+				System.out.println(rs.getRow() + "row selected...");
+				rs.previous();
+				while (rs.next()) {
+					Pwd = rs.getString("CMS_PWD");
+					System.out.println(Pwd);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Pwd;
+	}
+
+	// 비밀번호 변경 : 새 비밀번호 설정하기
+	public void ReNewPwd(String id, String pwd) {
+/*	      RePwd RI = new RePwd(id);  잘못 생각한 부분
+	      RePwd RP = new RePwd(pwd); 이거 넣으면 창 하나씩 더 생김*/
+		
+//		System.out.println(id);
+//		System.out.println(pwd);
+
+		try {
+			Class.forName(driver);
+			System.out.println("jdbc driver loading success.");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			System.out.println("oracle connection success.\n");
+			Statement stmt = conn.createStatement();
+
+			String Nquery = "UPDATE MEMBER SET CMS_PWD = '" + pwd + "'" + " WHERE CMS_ID ='" + id + "'";
+			System.out.println(Nquery);
+
+			boolean b = stmt.execute(Nquery);
+			if (!b) {
+				System.out.println("Insert success.\n");
+			} else {
+				System.out.println("Insert fail.\n");
+			}
+
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	// 탈퇴하기
+	public void Unrelist(String ID) {
+		ArrayList<MemberVo> Unrelist = new ArrayList<MemberVo>();
+
+		Unregister Cc = new Unregister(ID);
+		System.out.println(ID);
+
+		try {
+			Class.forName(driver);
+			System.out.println("jdbc driver loading success.");
+			Connection conn = DriverManager.getConnection(url, user, password);
+			System.out.println("oracle connection success.\n");
+			Statement stmt = conn.createStatement();
+
+			String Nquery = "DELETE FROM MEMBER WHERE CMS_ID = '" + ID + "'";
 			System.out.println(Nquery);
 
 			boolean b = stmt.execute(Nquery);
