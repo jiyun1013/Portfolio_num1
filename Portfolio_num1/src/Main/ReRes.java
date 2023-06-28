@@ -7,16 +7,15 @@ import javax.swing.*;
 public class ReRes extends WindowAdapter implements ActionListener {
 	private JFrame re_Res;
 	private JButton Change, Cancle;
+	private String ID;
 
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
 
-	public ReRes() {
+	public ReRes(String ID) {
+		this.ID=ID;
 		re_Res = new JFrame("예약 변경");
-	}
-
-	public void startFrame() {
 		re_Res.setSize(550, 240);
 		re_Res.setLayout(null);
 		re_Res.setResizable(false);
@@ -42,14 +41,17 @@ public class ReRes extends WindowAdapter implements ActionListener {
 		re_Res.addWindowListener(this);
 	}
 
-	public static void main(String[] args) {
-		ReRes reReser = new ReRes();
-		reReser.startFrame();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getActionCommand().equals("예약 변경")) {
+			Change Cg = new Change(ID);
+			re_Res.dispose();
+		}
+		
+		if(e.getActionCommand().equals("예약 취소")) {
+			Cancle Cc = new Cancle(ID);
+			re_Res.dispose();
+		}
 	}
 }
