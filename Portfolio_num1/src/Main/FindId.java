@@ -16,10 +16,10 @@ public class FindId extends WindowAdapter implements ActionListener {
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
-	
+
 	public void startFrame() {
 		dao = new MemberDAO();
-		
+
 		fiIdF = new JFrame("아이디 찾기");
 		fiIdF.setSize(600, 420);
 		fiIdF.setLayout(null);
@@ -33,21 +33,21 @@ public class FindId extends WindowAdapter implements ActionListener {
 		fN = new JTextField();
 		fN.setBounds(177, 55, 365, 50);
 		fN.setFont(new Font("맑은 고딕", 0, 24));
-		
+
 		lB = new JLabel("생년월일");
 		lB.setBounds(45, 137, 100, 29);
 		lB.setFont(new Font("맑은 고딕", 0, 24));
 		fB = new JTextField();
 		fB.setBounds(177, 126, 365, 50);
 		fB.setFont(new Font("맑은 고딕", 0, 24));
-		
+
 		lE = new JLabel("이메일");
 		lE.setBounds(45, 208, 72, 29);
 		lE.setFont(new Font("맑은 고딕", 0, 24));
 		fE = new JTextField();
 		fE.setBounds(177, 197, 365, 50);
 		fE.setFont(new Font("맑은 고딕", 0, 24));
-		
+
 		findId = new JButton("아이디 찾기");
 		findId.setBounds(200, 276, 200, 50);
 		findId.setFont(new Font("맑은 고딕", 0, 24));
@@ -61,7 +61,7 @@ public class FindId extends WindowAdapter implements ActionListener {
 		fiIdF.add(lE);
 		fiIdF.add(fE);
 		fiIdF.add(findId);
-		
+
 		fiIdF.setVisible(true);
 	}
 
@@ -72,21 +72,17 @@ public class FindId extends WindowAdapter implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(fN.getText() + fB.getText() + fE.getText());
-
 		String strNa = fN.getText();
 		String strBi = fB.getText();
 		String strEm = fE.getText();
 
 		ArrayList<MemberVo> Idlist = dao.Idlist(strNa, strBi, strEm);
-		
-		for(int i = 0; i < Idlist.size();i++) {
-			MemberVo FDd = (MemberVo) Idlist.get(i);
-			
-			if(strNa.equals(strNa) && strBi.equals(strBi) && strEm.equals(strEm)) {
-				JOptionPane.showMessageDialog(null, "아이디는 ["+(FDd.getCI())+"] 입니다.");
-			}
+
+		if (Idlist.size() == 0) {
+			JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
+		} else {
+			MemberVo FDd = (MemberVo) Idlist.get(0);
+			JOptionPane.showMessageDialog(null, "아이디는 [" + (FDd.getCI()) + "] 입니다.");
 		}
 	}
 }
