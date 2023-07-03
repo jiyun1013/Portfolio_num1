@@ -6,9 +6,9 @@ import java.util.*;
 import javax.swing.*;
 
 public class Login extends WindowAdapter implements ActionListener {
-	private JFrame Login_f;
-	private JTextField Lo_Id;
-	private JPasswordField Lo_Pwd;
+	private JFrame login_f;
+	private JTextField lo_Id;
+	private JPasswordField lo_Pwd;
 	private JButton bLogin, newMem, findId, findPwd;
 	private MemberDAO dao;
 	private Icon logo;
@@ -20,15 +20,15 @@ public class Login extends WindowAdapter implements ActionListener {
 
 	public Login() {
 		dao = new MemberDAO();
-		Login_f = new JFrame("로그인");
+		login_f = new JFrame("로그인");
 	}
 
 	public void startFrame() {
-		Login_f.setSize(1000, 600); // 프레임 사이즈 정하기
-		Login_f.setLayout(null);
-		Login_f.setResizable(false); // 프레임 사이즈 변경 불가
-		Login_f.setLocationRelativeTo(null); // 프레임 중앙에 놓기
-		Login_f.getContentPane().setBackground(Color.white); // 필드 안만들고 색상 흰색으로 바꾸기
+		login_f.setSize(1000, 600); // 프레임 사이즈 정하기
+		login_f.setLayout(null);
+		login_f.setResizable(false); // 프레임 사이즈 변경 불가
+		login_f.setLocationRelativeTo(null); // 프레임 중앙에 놓기
+		login_f.getContentPane().setBackground(Color.white); // 필드 안만들고 색상 흰색으로 바꾸기
 
 		logo = new ImageIcon("C:\\Users\\Class01\\Desktop\\logo.png");
 		JLabel imglogo = new JLabel(logo);
@@ -37,16 +37,16 @@ public class Login extends WindowAdapter implements ActionListener {
 		Label lid = new Label("아이디");
 		lid.setBounds(157, 271, 104, 54);
 		lid.setFont(new Font("맑은 고딕", 0, 36));
-		Lo_Id = new JTextField();
-		Lo_Id.setBounds(318, 271, 368, 54);
-		Lo_Id.setFont(new Font("맑은 고딕", 0, 36));
+		lo_Id = new JTextField();
+		lo_Id.setBounds(318, 271, 368, 54);
+		lo_Id.setFont(new Font("맑은 고딕", 0, 36));
 
 		Label lpwd = new Label("비밀번호");
 		lpwd.setBounds(128, 345, 142, 54);
 		lpwd.setFont(new Font("맑은 고딕", 0, 36));
-		Lo_Pwd = new JPasswordField();
-		Lo_Pwd.setBounds(318, 345, 368, 54);
-		Lo_Pwd.setFont(new Font("맑은 고딕", 0, 36));
+		lo_Pwd = new JPasswordField();
+		lo_Pwd.setBounds(318, 345, 368, 54);
+		lo_Pwd.setFont(new Font("맑은 고딕", 0, 36));
 
 		bLogin = new JButton("Login");
 		bLogin.setBounds(729, 271, 150, 130);
@@ -75,18 +75,18 @@ public class Login extends WindowAdapter implements ActionListener {
 		findPwd.setContentAreaFilled(false);
 		findPwd.addActionListener(this);
 
-		Login_f.add(lid);
-		Login_f.add(Lo_Id);
-		Login_f.add(lpwd);
-		Login_f.add(Lo_Pwd);
-		Login_f.add(bLogin);
-		Login_f.add(newMem);
-		Login_f.add(findId);
-		Login_f.add(findPwd);
-		Login_f.add(imglogo);
+		login_f.add(lid);
+		login_f.add(lo_Id);
+		login_f.add(lpwd);
+		login_f.add(lo_Pwd);
+		login_f.add(bLogin);
+		login_f.add(newMem);
+		login_f.add(findId);
+		login_f.add(findPwd);
+		login_f.add(imglogo);
 
-		Login_f.setVisible(true); // 프레임 보이게하기
-		Login_f.addWindowListener(this);
+		login_f.setVisible(true); // 프레임 보이게하기
+		login_f.addWindowListener(this);
 	}
 
 	public static void main(String[] args) {
@@ -96,9 +96,9 @@ public class Login extends WindowAdapter implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(Lo_Id.getText() + Lo_Pwd.getText());
+		System.out.println(lo_Id.getText() + lo_Pwd.getText());
 
-		String strId = Lo_Id.getText();
+		String strId = lo_Id.getText();
 
 		ArrayList<MemberVo> list = dao.list(strId);
 
@@ -109,13 +109,10 @@ public class Login extends WindowAdapter implements ActionListener {
 
 			System.out.println("==>" + id + " : " + pwd);
 
-			if (Lo_Pwd.getText().equals(pwd)) {
+			if (lo_Pwd.getText().equals(pwd)) {
 				ID = strId;
-				
 				Customer cuPage = new Customer(ID);
-				
-				Login_f.setVisible(false);
-
+				login_f.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 비밀번호가 일치하지 않습니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
 			}
