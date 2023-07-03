@@ -1,40 +1,32 @@
 package Main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 class MainCalendar extends JFrame implements ActionListener {
-	MemberDAO dao = new MemberDAO();
+	MemberDAO2 dao = new MemberDAO2();
 
 	String[] days = { "일", "월", "화", "수", "목", "금", "토" };
 	int year, month, day, todays, memoday = 0;
-
 	Font f;
 	Color bc, fc;
 	Calendar today, cal;
-
-	JButton btnBefore, btnAfter, btnAdd, btnDel;
+	JButton btnBefore, btnAfter;
 	JButton[] calBtn = new JButton[49];
-
 	JLabel thing, time;
-
 	JPanel panWest, panSouth, panEast, panNorth;
-
-	JTextField txtMonth, txtYear, txtWrite, txtTime;
+	JTextField txtMonth, txtYear, txtTime;
+	JTable table = new JTable();
+	JScrollPane ScrollPane = new JScrollPane(table);
 	BorderLayout bLayout = new BorderLayout();
+	String[] headings = new String[] { "Id", "Time", "People", "Memo", "Rememo" };
+
 
 	public MainCalendar() {
 		today = Calendar.getInstance();
@@ -43,18 +35,16 @@ class MainCalendar extends JFrame implements ActionListener {
 		month = today.get(Calendar.MONTH) + 1;// 1월의 값이 0
 
 		panNorth = new JPanel();
-		panNorth.add(btnBefore = new JButton("Before"));
+		panNorth.add(btnBefore = new JButton("<<"));
 		panNorth.add(txtYear = new JTextField(year + "년"));
 		panNorth.add(txtMonth = new JTextField(month + "월"));
 		txtYear.setEnabled(false);
 		txtMonth.setEnabled(false);
 
-		panNorth.add(btnAfter = new JButton("After"));
+		panNorth.add(btnAfter = new JButton(">>"));
 		f = new Font("Sherif", Font.BOLD, 24);
 		txtYear.setFont(f);
 		txtMonth.setFont(f);
-		panNorth.add(btnAdd = new JButton("메모추가"));
-		panNorth.add(btnDel = new JButton("메모삭제"));
 
 		add(panNorth, "North");
 
@@ -68,19 +58,21 @@ class MainCalendar extends JFrame implements ActionListener {
 		add(panWest, "West");
 
 		panEast = new JPanel();
-		panEast.add(time = new JLabel("메모"));
-		panEast.add(txtWrite = new JTextField());
-		txtWrite.setPreferredSize(new Dimension(350, 300));
+		panEast.add(time = new JLabel("예약상태"));
+
+		
+//		panEast.setBorder(new LineBorder(Color.black,1,true));
+		panEast.setPreferredSize(new Dimension(560,350));
+//		table.setPreferredSize(new Dimension(560, 350));
 		add(panEast, "East");
 
 		btnBefore.addActionListener(this);
 		btnAfter.addActionListener(this);
-		btnAdd.addActionListener(this);
-		btnDel.addActionListener(this);
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("일정관리 시스템");
-		setBounds(600, 400, 800, 400);
+		setSize(1000, 450);
+		setTitle("예약관리 시스템");
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
 	}
 
@@ -113,9 +105,7 @@ class MainCalendar extends JFrame implements ActionListener {
 			if (cal.get(Calendar.MONTH) != month - 1) {
 				break;
 			}
-//         dbConnect();
 			todays = i;
-//         checkday();
 			if (memoday == 1) {
 				calBtn[i + 6 + hopping].setForeground(new Color(0, 255, 0));
 			} else {
@@ -155,21 +145,25 @@ class MainCalendar extends JFrame implements ActionListener {
 			hideInit();
 			this.txtYear.setText(year + "년");
 			this.txtMonth.setText(month + "월");
-		} else if (ae.getSource() == btnAdd) {
-//         dbConnect();
-//         add();
-			calSet();
-			txtWrite.setText("");
-		} else if (ae.getSource() == btnDel) {
-//         dbConnect();
-//         del();
-			calSet();
-			txtWrite.setText("");
 		} else if (Integer.parseInt(ae.getActionCommand()) >= 1 && Integer.parseInt(ae.getActionCommand()) <= 31) {
 			day = Integer.parseInt(ae.getActionCommand());
 			// 버튼의 밸류 즉 1,2,3.... 문자를 정수형으로 변환하여 클릭한 날짜를 바꿔준다.
-			System.out.println(day);
-//         dbConnect();
+
+			DefaultTableModel rec = new DefaultTableModel(headings, 0);
+			ArrayList<MemberVo2> mCheck = dao.ManagerCheck(year + "-" + month + "-" + day);
+			
+			for (MemberVo2 vo : mCheck) {
+				Object[] row = { vo.getID(), vo.getTime(), vo.getPeople(), vo.getMemo(), vo.getReMemo() };
+				System.out.println(vo.getID());
+				rec.addRow(row);
+			}
+			
+			table.setModel(rec);
+			
+	//		panEast.add(ScrollPane);
+			panEast.add(ScrollPane,BorderLayout.CENTER);
+//			ScrollPane.setSize(560,350);
+			ScrollPane.setBounds(0, 25, 555, 330);
 			calSet();
 		}
 	}
