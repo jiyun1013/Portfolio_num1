@@ -203,9 +203,6 @@ public class MemberDAO {
 	public void ReNewPwd(String id, String pwd) {
 /*	      RePwd RI = new RePwd(id);  잘못 생각한 부분
 	      RePwd RP = new RePwd(pwd); 이거 넣으면 창 하나씩 더 생김*/
-		
-//		System.out.println(id);
-//		System.out.println(pwd);
 
 		try {
 			Class.forName(driver);
