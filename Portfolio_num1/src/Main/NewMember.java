@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class NewMember extends WindowAdapter implements ActionListener {
-	private JFrame NewMem_f;
+	private JFrame newMem_f;
 	private JLabel nwId, nwPw, nwNa, nwBi, nwEm, MsId, MsPw, MsBi;
 	private JTextField neId, nePw, neNa, neBi, neEm;
 	private JButton same, join;
@@ -18,15 +18,15 @@ public class NewMember extends WindowAdapter implements ActionListener {
 	}
 
 	public NewMember() {
-		NewMem_f = new JFrame("회원가입");
+		newMem_f = new JFrame("회원가입");
 	}
 
 	public void startFrame() {
-		NewMem_f.setSize(800, 850);
-		NewMem_f.setLayout(null);
-		NewMem_f.setResizable(false);
-		NewMem_f.setLocationRelativeTo(null);
-		NewMem_f.getContentPane().setBackground(Color.white);
+		newMem_f.setSize(800, 850);
+		newMem_f.setLayout(null);
+		newMem_f.setResizable(false);
+		newMem_f.setLocationRelativeTo(null);
+		newMem_f.getContentPane().setBackground(Color.white);
 
 		logo = new ImageIcon("C:\\Users\\Class01\\Desktop\\logo.png");
 		JLabel imglogo = new JLabel(logo);
@@ -38,15 +38,15 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		neId = new JTextField();
 		neId.setBounds(245, 240, 365, 50);
 		neId.setFont(new Font("맑은 고딕", 0, 24));
-		MsId = new JLabel("※ 20글자 이하의 영어+숫자 조합으로 작성해주세요.");
+		MsId = new JLabel("※ 20글자 이하로 작성해주세요.");
 		MsId.setBounds(320, 290, 285, 16);
 		MsId.setForeground(Color.red);
 
-		same = new JButton("중복확인");
-		same.setBounds(635, 240, 108, 50);
-		same.setFont(new Font("맑은 고딕", 0, 18));
-		same.setContentAreaFilled(false);
-		same.addActionListener(this);
+//		same = new JButton("중복확인");
+//		same.setBounds(635, 240, 108, 50);
+//		same.setFont(new Font("맑은 고딕", 0, 18));
+//		same.setContentAreaFilled(false);
+//		same.addActionListener(this);
 
 		nwPw = new JLabel("비밀번호");
 		nwPw.setBounds(114, 339, 96, 27);
@@ -54,7 +54,7 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		nePw = new JTextField();
 		nePw.setBounds(245, 327, 365, 50);
 		nePw.setFont(new Font("맑은 고딕", 0, 24));
-		MsPw = new JLabel("※ 10글자 이상의 20글자 이하 영어+숫자 조합으로 작성해주세요.");
+		MsPw = new JLabel("※ 20글자 이하로 작성해주세요.");
 		MsPw.setBounds(250, 377, 357, 16);
 		MsPw.setForeground(Color.red);
 
@@ -88,29 +88,29 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		join.setContentAreaFilled(false);
 		join.addActionListener(this);
 
-		NewMem_f.add(imglogo);
-		NewMem_f.add(nwId);
-		NewMem_f.add(neId);
-		NewMem_f.add(same);
-		NewMem_f.add(nwPw);
-		NewMem_f.add(nePw);
-		NewMem_f.add(nwNa);
-		NewMem_f.add(neNa);
-		NewMem_f.add(nwBi);
-		NewMem_f.add(neBi);
-		NewMem_f.add(nwEm);
-		NewMem_f.add(neEm);
-		NewMem_f.add(join);
-		NewMem_f.add(MsId);
-		NewMem_f.add(MsPw);
-		NewMem_f.add(MsBi);
+		newMem_f.add(imglogo);
+		newMem_f.add(nwId);
+		newMem_f.add(neId);
+//		newMem_f.add(same);
+		newMem_f.add(nwPw);
+		newMem_f.add(nePw);
+		newMem_f.add(nwNa);
+		newMem_f.add(neNa);
+		newMem_f.add(nwBi);
+		newMem_f.add(neBi);
+		newMem_f.add(nwEm);
+		newMem_f.add(neEm);
+		newMem_f.add(join);
+		newMem_f.add(MsId);
+		newMem_f.add(MsPw);
+		newMem_f.add(MsBi);
 
-		NewMem_f.setVisible(true);
+		newMem_f.setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		NewMember NewMem_f = new NewMember();
-		NewMem_f.startFrame();
+		NewMember newMem_f = new NewMember();
+		newMem_f.startFrame();
 	}
 
 	@Override
@@ -137,13 +137,9 @@ public class NewMember extends WindowAdapter implements ActionListener {
 //
 //		}
 
-		join.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dao.Newlist(NewId, NewPd, NewNm, NewBh, NewEm);
-			}
-		});
-//		if (e.getActionCommand().equals("회원가입")) {
-//			ArrayList<MemberVo> Newlist = dao.Newlist(NewId, NewPd, NewNm, NewBh, NewEm);
-//		}
+		if(e.getActionCommand().equals("회원가입")) {
+			dao.Newlist(NewId, NewPd, NewNm, NewBh, NewEm);
+			JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+		}
 	}
 }
