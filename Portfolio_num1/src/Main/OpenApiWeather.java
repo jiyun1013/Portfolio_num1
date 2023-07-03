@@ -57,16 +57,16 @@ public class OpenApiWeather {
 //         System.out.println("기온 : " + v[3] + "℃");
 //         System.out.println("습도 : " + v[4] + "%");
 			if (v[2].equals("맑음")) {
-				TodayEvent_Sun Sun = new TodayEvent_Sun();
+				TodayEvent_Sun sun = new TodayEvent_Sun();
 			}
 			if (v[2].equals("구름많음") || v[2].equals("흐림")) {
-				TodayEvent_Cloudy Cloudy = new TodayEvent_Cloudy();
+				TodayEvent_Cloudy cloudy = new TodayEvent_Cloudy();
 			}
 			if (v[2].equals("비") || v[2].equals("비/눈") || v[2].equals("빗방울") || v[2].equals("빗방울눈날림")) {
-				TodayEvent_Rain Rain = new TodayEvent_Rain();
+				TodayEvent_Rain rain = new TodayEvent_Rain();
 			}
 			if(v[2].equals("눈") || v[2].equals("눈날림")) {
-				TodayEvent_Snow Snow = new TodayEvent_Snow();
+				TodayEvent_Snow snow = new TodayEvent_Snow();
 			}
 
 		} else { // error
