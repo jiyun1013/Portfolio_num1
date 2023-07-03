@@ -1,24 +1,34 @@
 package Main;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class Customer extends WindowAdapter implements ActionListener {
 	private JFrame mypage;
 	private JButton logOut, repwd, unregister, reservation, event, check, change;
 	private Icon logo;
+	private String ID;
+	private MemberDAO2 dao;
 
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
 
-	public Customer() {
-		mypage = new JFrame("마이페이지");
-	}
+	public Customer(String ID) {
+		this.ID = ID;
 
-	public void startFrame() {
+		mypage = new JFrame("마이페이지");
 		mypage.setSize(760, 745);
 		mypage.setLayout(null);
 		mypage.setResizable(false);
@@ -80,28 +90,51 @@ public class Customer extends WindowAdapter implements ActionListener {
 		mypage.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		Customer mypage = new Customer();
-		mypage.startFrame();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getActionCommand().equals("로그아웃")) {
+		dao = new MemberDAO2();
+
+		if (e.getActionCommand().equals("로그아웃")) {
 			Login Lo = new Login();
 			Lo.startFrame();
 			mypage.dispose();
 		}
-		
-		if(e.getActionCommand().equals("오늘의 이벤트")) {
-			TodayEvent_Sun TE = new TodayEvent_Sun();
-			TE.startFrame();
+
+		if (e.getActionCommand().equals("비밀번호 변경")) {
+			RePwd rp = new RePwd(ID);
+		}
+
+		if (e.getActionCommand().equals("회원 탈퇴")) {
+			Unregister ur = new Unregister(ID);
+		}
+
+		if (e.getActionCommand().equals("오늘의 이벤트")) {
+			OpenApiWeather ApWe = new OpenApiWeather();
+			ApWe.main(null);
+		}
+
+		if (e.getActionCommand().equals("예약하기")) {
+			if (dao.ReChe(ID)==0) {
+				Reservation Rn = new Reservation(ID);
+			} else {
+				JOptionPane.showMessageDialog(null, "예약은 1회만 가능하오니 참고바랍니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+
+		if (e.getActionCommand().equals("예약 변경")) {
+			if (dao.ReChe(ID)==0) {
+				JOptionPane.showMessageDialog(null, "예약이 존재하지 않습니다.");
+			} else {
+				ReRes RR = new ReRes(ID);
+			}
 		}
 		
-		if(e.getActionCommand().equals("예약하기")) {
-			Reservation Rn = new Reservation();
-			Rn.startFrame();
+		if (e.getActionCommand().equals("예약 확인")) {
+			if (dao.ReChe(ID)==1) {
+				Check ch = new Check(ID);
+			} else {
+				JOptionPane.showMessageDialog(null, "예약이 존재하지 않습니다.");
+			}
 		}
 	}
 }
