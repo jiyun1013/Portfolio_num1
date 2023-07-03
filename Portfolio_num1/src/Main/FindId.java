@@ -7,10 +7,10 @@ import java.util.*;
 import javax.swing.*;
 
 public class FindId extends WindowAdapter implements ActionListener {
-	private JFrame FiIdF;
-	private JLabel FIN, FIB, FIE;
-	private JTextField FDN, FDB, FDE;
-	private JButton FindId;
+	private JFrame fiIdF;
+	private JLabel lN, lB, lE;
+	private JTextField fN, fB, fE;
+	private JButton findId;
 	private MemberDAO dao;
 
 	public void windowClosing(WindowEvent e) {
@@ -20,49 +20,49 @@ public class FindId extends WindowAdapter implements ActionListener {
 	public void startFrame() {
 		dao = new MemberDAO();
 		
-		FiIdF = new JFrame("아이디 찾기");
-		FiIdF.setSize(600, 420);
-		FiIdF.setLayout(null);
-		FiIdF.setResizable(false);
-		FiIdF.setLocationRelativeTo(null);
-		FiIdF.getContentPane().setBackground(Color.white);
+		fiIdF = new JFrame("아이디 찾기");
+		fiIdF.setSize(600, 420);
+		fiIdF.setLayout(null);
+		fiIdF.setResizable(false);
+		fiIdF.setLocationRelativeTo(null);
+		fiIdF.getContentPane().setBackground(Color.white);
 
-		FIN = new JLabel("이름");
-		FIN.setBounds(45, 66, 50, 29);
-		FIN.setFont(new Font("맑은 고딕", 0, 24));
-		FDN = new JTextField();
-		FDN.setBounds(177, 55, 365, 50);
-		FDN.setFont(new Font("맑은 고딕", 0, 24));
+		lN = new JLabel("이름");
+		lN.setBounds(45, 66, 50, 29);
+		lN.setFont(new Font("맑은 고딕", 0, 24));
+		fN = new JTextField();
+		fN.setBounds(177, 55, 365, 50);
+		fN.setFont(new Font("맑은 고딕", 0, 24));
 		
-		FIB = new JLabel("생년월일");
-		FIB.setBounds(45, 137, 100, 29);
-		FIB.setFont(new Font("맑은 고딕", 0, 24));
-		FDB = new JTextField();
-		FDB.setBounds(177, 126, 365, 50);
-		FDB.setFont(new Font("맑은 고딕", 0, 24));
+		lB = new JLabel("생년월일");
+		lB.setBounds(45, 137, 100, 29);
+		lB.setFont(new Font("맑은 고딕", 0, 24));
+		fB = new JTextField();
+		fB.setBounds(177, 126, 365, 50);
+		fB.setFont(new Font("맑은 고딕", 0, 24));
 		
-		FIE = new JLabel("이메일");
-		FIE.setBounds(45, 208, 72, 29);
-		FIE.setFont(new Font("맑은 고딕", 0, 24));
-		FDE = new JTextField();
-		FDE.setBounds(177, 197, 365, 50);
-		FDE.setFont(new Font("맑은 고딕", 0, 24));
+		lE = new JLabel("이메일");
+		lE.setBounds(45, 208, 72, 29);
+		lE.setFont(new Font("맑은 고딕", 0, 24));
+		fE = new JTextField();
+		fE.setBounds(177, 197, 365, 50);
+		fE.setFont(new Font("맑은 고딕", 0, 24));
 		
-		FindId = new JButton("아이디 찾기");
-		FindId.setBounds(200, 276, 200, 50);
-		FindId.setFont(new Font("맑은 고딕", 0, 24));
-		FindId.setContentAreaFilled(false);
-		FindId.addActionListener(this);
+		findId = new JButton("아이디 찾기");
+		findId.setBounds(200, 276, 200, 50);
+		findId.setFont(new Font("맑은 고딕", 0, 24));
+		findId.setContentAreaFilled(false);
+		findId.addActionListener(this);
 
-		FiIdF.add(FIN);
-		FiIdF.add(FDN);
-		FiIdF.add(FIB);
-		FiIdF.add(FDB);
-		FiIdF.add(FIE);
-		FiIdF.add(FDE);
-		FiIdF.add(FindId);
+		fiIdF.add(lN);
+		fiIdF.add(fN);
+		fiIdF.add(lB);
+		fiIdF.add(fB);
+		fiIdF.add(lE);
+		fiIdF.add(fE);
+		fiIdF.add(findId);
 		
-		FiIdF.setVisible(true);
+		fiIdF.setVisible(true);
 	}
 
 	public static void main(String[] args) {
@@ -73,11 +73,11 @@ public class FindId extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(FDN.getText() + FDB.getText() + FDE.getText());
+		System.out.println(fN.getText() + fB.getText() + fE.getText());
 
-		String strNa = FDN.getText();
-		String strBi = FDB.getText();
-		String strEm = FDE.getText();
+		String strNa = fN.getText();
+		String strBi = fB.getText();
+		String strEm = fE.getText();
 
 		ArrayList<MemberVo> Idlist = dao.Idlist(strNa, strBi, strEm);
 		
