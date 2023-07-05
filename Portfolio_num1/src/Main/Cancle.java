@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class Cancle extends WindowAdapter implements ActionListener {
+public class Cancle implements ActionListener {
 	private JFrame cancleF;
 	private JLabel mainMes, subMes;
 	private JButton no, ok;
@@ -48,6 +48,7 @@ public class Cancle extends WindowAdapter implements ActionListener {
 		cancleF.add(ok);
 
 		cancleF.setVisible(true);
+		cancleF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
