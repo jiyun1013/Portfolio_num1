@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class NewPwd extends WindowAdapter implements ActionListener {
+public class NewPwd implements ActionListener {
 	private JFrame nPwd;
 	private JLabel newPwd, reNewPwd;
 	private JTextField fNewPwd, fReNewPwd;
@@ -54,6 +54,7 @@ public class NewPwd extends WindowAdapter implements ActionListener {
 		nPwd.add(ok);
 
 		nPwd.setVisible(true);
+		nPwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
@@ -64,7 +65,6 @@ public class NewPwd extends WindowAdapter implements ActionListener {
 		if (e.getActionCommand().equals("비밀번호 설정")) {
 			if (NP.equals(RP)) {
 				dao.NewPwd(ID, NP);
-
 				JOptionPane.showMessageDialog(null, "비밀번호 변경이 완료되었습니다.");
 				nPwd.dispose();
 			} else {
