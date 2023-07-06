@@ -5,16 +5,12 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-public class ManagerLogin extends WindowAdapter implements ActionListener {
+public class ManagerLogin implements ActionListener {
 	private JFrame mLogin_f;
 	private JTextField mLo_Id;
 	private JPasswordField mLo_Pwd;
 	private JButton mBLogin;
 	private Icon logo;
-
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
 
 	public ManagerLogin() {
 		mLogin_f = new JFrame("관리자용 로그인");
@@ -59,7 +55,7 @@ public class ManagerLogin extends WindowAdapter implements ActionListener {
 		mLogin_f.add(imglogo);
 
 		mLogin_f.setVisible(true); // 프레임 보이게하기
-		mLogin_f.addWindowListener(this);
+		mLogin_f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
