@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class TodayEvent_Sun extends WindowAdapter {
+public class TodayEvent_Sun {
 	private JFrame toEvt;
 	private JLabel weather;
 	private Icon logo;
@@ -34,5 +34,6 @@ public class TodayEvent_Sun extends WindowAdapter {
 		toEvt.add(imglogo);
 		toEvt.add(weather);
 		toEvt.setVisible(true);
+		toEvt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
