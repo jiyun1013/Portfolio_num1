@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-public class Login extends WindowAdapter implements ActionListener {
+public class Login implements ActionListener {
 	private JFrame login_f;
 	private JTextField lo_Id;
 	private JPasswordField lo_Pwd;
@@ -86,7 +86,7 @@ public class Login extends WindowAdapter implements ActionListener {
 		login_f.add(imglogo);
 
 		login_f.setVisible(true); // 프레임 보이게하기
-		login_f.addWindowListener(this);
+		login_f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
