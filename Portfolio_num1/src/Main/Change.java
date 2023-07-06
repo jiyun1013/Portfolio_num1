@@ -30,10 +30,6 @@ public class Change extends WindowAdapter implements ActionListener {
 	JDatePanelImpl datePanel = new JDatePanelImpl(model);
 	JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
-
 	public Change(String ID) {
 		this.ID = ID;
 		changeF = new JFrame("예약 변경");
@@ -89,6 +85,7 @@ public class Change extends WindowAdapter implements ActionListener {
 		changeF.add(cText);
 
 		changeF.setVisible(true);
+		changeF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
