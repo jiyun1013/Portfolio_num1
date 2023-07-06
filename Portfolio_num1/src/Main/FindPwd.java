@@ -6,17 +6,13 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class FindPwd extends WindowAdapter implements ActionListener {
+public class FindPwd implements ActionListener {
 	private JFrame fiPwF;
 	private JLabel lI, lE;
 	private JTextField fI, fE;
 	private JButton findPwd;
 	private String ID;
 	private MemberDAO dao;
-
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
 
 	public FindPwd() {
 		dao = new MemberDAO();
@@ -54,21 +50,24 @@ public class FindPwd extends WindowAdapter implements ActionListener {
 		fiPwF.add(findPwd);
 
 		fiPwF.setVisible(true);
+		fiPwF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String strId = fI.getText();
 		String strEm = fE.getText();
-		ID = strId;
-		System.out.println(strId + " " + strEm);
+		ArrayList<MemberVo> Id = dao.Pwdlist(strId, strEm);
+		System.out.println(Id);
 
 		if (e.getActionCommand().equals("비밀번호 찾기")) {
-			dao.Pwdlist(strId, strEm);
-			if (strId.equals(strId) && strEm.equals(strEm)) {
+			if (Id.size() == 0) {
+				JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
+			} else {
+				MemberVo FDd = (MemberVo) Id.get(0);
 				JOptionPane.showMessageDialog(null, "비밀번호를 다시 설정해주세요.");
 				fiPwF.dispose();
-				NewPwd nP = new NewPwd(ID);
+				NewPwd nP = new NewPwd(strId);
 			}
 		}
 	}
