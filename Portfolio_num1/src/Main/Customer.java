@@ -19,13 +19,16 @@ public class Customer extends WindowAdapter implements ActionListener {
 	private JButton logOut, repwd, unregister, reservation, event, check, change;
 	private Icon logo;
 	private String ID;
+	private JLabel welcome;
 	private MemberDAO2 dao;
+	private MemberDAO da;
 
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
 
 	public Customer(String ID) {
+		da = new MemberDAO();
 		this.ID = ID;
 
 		mypage = new JFrame("마이페이지");
@@ -37,7 +40,7 @@ public class Customer extends WindowAdapter implements ActionListener {
 
 		logo = new ImageIcon("C:\\Users\\Class01\\Desktop\\logo.png");
 		JLabel imglogo = new JLabel(logo);
-		imglogo.setBounds(178, 161, 400, 130);
+		imglogo.setBounds(178, 155, 400, 130);
 
 		logOut = new JButton("로그아웃");
 		logOut.setBounds(22, 13, 127, 35);
@@ -53,6 +56,10 @@ public class Customer extends WindowAdapter implements ActionListener {
 		unregister.setBounds(595, 13, 127, 35);
 		unregister.setContentAreaFilled(false);
 		unregister.addActionListener(this);
+
+		welcome = new JLabel(da.Name(ID) + "님 환영합니다!");
+		welcome.setFont(new Font("맑은 고딕", 0, 24));
+		welcome.setBounds(260, 325, 250, 30);
 
 		reservation = new JButton("예약하기");
 		reservation.setBounds(106, 387, 235, 102);
@@ -86,6 +93,7 @@ public class Customer extends WindowAdapter implements ActionListener {
 		mypage.add(event);
 		mypage.add(check);
 		mypage.add(change);
+		mypage.add(welcome);
 
 		mypage.setVisible(true);
 	}
@@ -114,7 +122,7 @@ public class Customer extends WindowAdapter implements ActionListener {
 		}
 
 		if (e.getActionCommand().equals("예약하기")) {
-			if (dao.ReChe(ID)==0) {
+			if (dao.ReChe(ID) == 0) {
 				Reservation Rn = new Reservation(ID);
 			} else {
 				JOptionPane.showMessageDialog(null, "예약은 1회만 가능하오니 참고바랍니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
@@ -122,15 +130,15 @@ public class Customer extends WindowAdapter implements ActionListener {
 		}
 
 		if (e.getActionCommand().equals("예약 변경")) {
-			if (dao.ReChe(ID)==0) {
+			if (dao.ReChe(ID) == 0) {
 				JOptionPane.showMessageDialog(null, "예약이 존재하지 않습니다.");
 			} else {
 				ReRes RR = new ReRes(ID);
 			}
 		}
-		
+
 		if (e.getActionCommand().equals("예약 확인")) {
-			if (dao.ReChe(ID)==1) {
+			if (dao.ReChe(ID) == 1) {
 				Check ch = new Check(ID);
 			} else {
 				JOptionPane.showMessageDialog(null, "예약이 존재하지 않습니다.");
