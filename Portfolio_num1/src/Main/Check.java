@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class Check extends WindowAdapter implements ActionListener {
+public class Check implements ActionListener {
 	private JFrame check_F;
 	private JLabel imglogo, fMent, sMent;
 	private JTextField fDay, fTime;
@@ -22,10 +22,6 @@ public class Check extends WindowAdapter implements ActionListener {
 	private Icon logo;
 	private MemberDAO2 dao;
 	private String ID, reDay;
-
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
 
 	public Check(String ID) {
 		this.ID = ID;
@@ -77,6 +73,7 @@ public class Check extends WindowAdapter implements ActionListener {
 		check_F.add(bCheck);
 
 		check_F.setVisible(true);
+		check_F.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
