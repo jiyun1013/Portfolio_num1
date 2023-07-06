@@ -5,17 +5,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class NewMember extends WindowAdapter implements ActionListener {
+public class NewMember implements ActionListener {
 	private JFrame newMem_f;
 	private JLabel nwId, nwPw, nwNa, nwBi, nwEm, MsId, MsPw, MsBi;
 	private JTextField neId, nePw, neNa, neBi, neEm;
 	private JButton same, join;
 	private Icon logo;
 	private MemberDAO dao = new MemberDAO();
-
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
 
 	public NewMember() {
 		newMem_f = new JFrame("회원가입");
@@ -38,15 +34,9 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		neId = new JTextField();
 		neId.setBounds(245, 240, 365, 50);
 		neId.setFont(new Font("맑은 고딕", 0, 24));
-		MsId = new JLabel("※ 20글자 이하로 작성해주세요.");
-		MsId.setBounds(320, 290, 285, 16);
+		MsId = new JLabel("※ 7글자 이상, 20글자 미만으로 작성해주세요.");
+		MsId.setBounds(353, 290, 285, 16);
 		MsId.setForeground(Color.red);
-
-//		same = new JButton("중복확인");
-//		same.setBounds(635, 240, 108, 50);
-//		same.setFont(new Font("맑은 고딕", 0, 18));
-//		same.setContentAreaFilled(false);
-//		same.addActionListener(this);
 
 		nwPw = new JLabel("비밀번호");
 		nwPw.setBounds(114, 339, 96, 27);
@@ -54,8 +44,8 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		nePw = new JTextField();
 		nePw.setBounds(245, 327, 365, 50);
 		nePw.setFont(new Font("맑은 고딕", 0, 24));
-		MsPw = new JLabel("※ 20글자 이하로 작성해주세요.");
-		MsPw.setBounds(250, 377, 357, 16);
+		MsPw = new JLabel("※ 7글자 이상, 20글자 미만으로 작성해주세요.");
+		MsPw.setBounds(353, 377, 357, 16);
 		MsPw.setForeground(Color.red);
 
 		nwNa = new JLabel("이름");
@@ -73,7 +63,7 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		neBi.setFont(new Font("맑은 고딕", 0, 24));
 		MsBi = new JLabel("※ 8자리 숫자로 입력해주세요.");
 		MsBi.setForeground(Color.red);
-		MsBi.setBounds(438, 551, 170, 16);
+		MsBi.setBounds(435, 551, 170, 16);
 
 		nwEm = new JLabel("이메일");
 		nwEm.setBounds(114, 594, 75, 27);
@@ -91,7 +81,6 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		newMem_f.add(imglogo);
 		newMem_f.add(nwId);
 		newMem_f.add(neId);
-//		newMem_f.add(same);
 		newMem_f.add(nwPw);
 		newMem_f.add(nePw);
 		newMem_f.add(nwNa);
@@ -106,6 +95,7 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		newMem_f.add(MsBi);
 
 		newMem_f.setVisible(true);
+		newMem_f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
@@ -121,25 +111,41 @@ public class NewMember extends WindowAdapter implements ActionListener {
 		String NewNm = neNa.getText();
 		String NewBh = neBi.getText();
 		String NewEm = neEm.getText();
-//
-//		if (e.getActionCommand().equals("중복확인")) {
-//			if (NewId.length() <= 20 && NewId.length() > 0) {
-//				System.out.println("글자수맞음");
-//			} else {
-//				JOptionPane.showMessageDialog(null, "20글자 이하로 입력해주세요.", " ERROR", JOptionPane.WARNING_MESSAGE);
-//			}
-////				if (dao.MEMBER.CSM_ID != neId) {
-////					JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
-////				} else {
-////					JOptionPane.showMessageDialog(null, "중복된 아이디입니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
-////				}
-//		} else {
-//
-//		}
 
-		if(e.getActionCommand().equals("회원가입")) {
-			dao.Newlist(NewId, NewPd, NewNm, NewBh, NewEm);
-			JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+		System.out.println("생년월일 글자 : " + NewBh.length());
+
+		if (e.getActionCommand().equals("회원가입")) {
+
+			// 아이디 글자수 체크
+			if (NewId.length() >= 7 && NewId.length() < 20) {
+				ArrayList<MemberVo> Ch = dao.Check(NewId);
+				System.out.println(Ch.size());
+
+				// 아이디 중복 체크
+				if (Ch.size() == 0) {
+
+					// 비밀번호 글자수 체크
+					if (NewPd.length() >= 7 && NewPd.length() < 20) {
+
+						// 생일 체크
+						if (NewBh.length() == 8) {
+							dao.Newlist(NewId, NewPd, NewNm, NewBh, NewEm);
+							JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+						} else {
+							JOptionPane.showMessageDialog(null, "생년월일 양식은 ex)19981013 입니다.", " ERROR",
+									JOptionPane.WARNING_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "비밀번호는 7글자 이상, 20글자 미만으로 입력해주세요.", " ERROR",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "중복된 아이디입니다.", " ERROR", JOptionPane.WARNING_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "아이디는 7글자 이상, 20글자 미만으로 입력해주세요.", " ERROR",
+						JOptionPane.WARNING_MESSAGE);
+			}
 		}
 	}
 }
