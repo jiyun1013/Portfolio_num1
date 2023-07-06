@@ -5,14 +5,10 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class TodayEvent_Cloudy extends WindowAdapter {
+public class TodayEvent_Cloudy {
 	private JFrame toEvt;
 	private JLabel weather;
 	private Icon logo;
-
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
 
 	public TodayEvent_Cloudy() {
 		toEvt = new JFrame("오늘의 이벤트");
@@ -34,5 +30,6 @@ public class TodayEvent_Cloudy extends WindowAdapter {
 		toEvt.add(imglogo);
 		toEvt.add(weather);
 		toEvt.setVisible(true);
+		toEvt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
