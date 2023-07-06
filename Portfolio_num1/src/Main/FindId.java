@@ -13,10 +13,6 @@ public class FindId extends WindowAdapter implements ActionListener {
 	private JButton findId;
 	private MemberDAO dao;
 
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	}
-
 	public void startFrame() {
 		dao = new MemberDAO();
 
@@ -63,6 +59,7 @@ public class FindId extends WindowAdapter implements ActionListener {
 		fiIdF.add(findId);
 
 		fiIdF.setVisible(true);
+		fiIdF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
