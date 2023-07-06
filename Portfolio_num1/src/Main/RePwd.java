@@ -77,7 +77,7 @@ public class RePwd extends WindowAdapter implements ActionListener {
 					JOptionPane.showMessageDialog(null, "비밀번호 변경이 완료되었습니다.\n다시 로그인 시 새 비밀번호를 입력해주세요.");
 					rePd.dispose();
 				}else {
-					JOptionPane.showMessageDialog(null, "새 비밀번호와 확인이 일치하지 않습니다.");
+					JOptionPane.showMessageDialog(null, "신규 비밀번호와 확인이 일치하지 않습니다.");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "현재 비밀번호가 일치하지 않습니다.");
